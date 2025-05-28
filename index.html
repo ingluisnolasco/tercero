@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -27,8 +27,190 @@
 
 <body>
     <!--a href="https://forms.gle/CPuAsuJ5sLA6JWFW7" >Examen</a-->
-    <iframe src="https://drive.google.com/file/d/1JnhY8CW9V0wFqTHzoLi_Yd9ZqkLRqCT1/preview"></iframe>
+    <!--iframe src="https://drive.google.com/file/d/1JnhY8CW9V0wFqTHzoLi_Yd9ZqkLRqCT1/preview"></iframe-->
     <!--iframe src="https://docs.google.com/forms/d/e/1FAIpQLScp40XIz1lix1RFaEy0GcGbsVs99jpSxHDBNC6TQOjMQwIF-Q/viewform"></iframe-->    
+<!--/body>
+
+</html-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicios de Ecuaciones de Segundo Grado</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #fff;
+            color: #000;
+            padding: 20px;
+            margin: 0;
+            font-size: 12pt;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: 18pt;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .grid-container {
+            column-count: 2;
+            column-gap: 20px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 15px;
+            break-inside: avoid;
+        }
+
+        .equation {
+            font-size: 14pt;
+            margin-bottom: 8px;
+        }
+
+        .solutions {
+            font-size: 12pt;
+            color: #007000;
+            font-weight: bold;
+        }
+
+        .nombre-input {
+            margin-top: 10px;
+        }
+
+        .nombre-input label {
+            font-size: 10pt;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .nombre-input input {
+            width: 100%;
+            padding: 4px 8px 4px 4px;
+            font-size: 10pt;
+            box-sizing: border-box;
+        }
+
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+
+            h1 {
+                font-size: 18pt;
+            }
+
+            .grid-container {
+                column-count: 2;
+                column-gap: 15px;
+            }
+
+            .card {
+                background-color: #fff;
+                border: 1px solid #ccc;
+                padding: 8px;
+            }
+
+            .solutions {
+                color: #000;
+                font-style: normal;
+            }
+
+            .nombre-input input {
+                font-size: 10pt;
+                padding: 4px 8px 4px 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ejercicios de Ecuaciones de Segundo Grado</h1>
+    <div class="grid-container" id="equation-container">
+    </div>
+
+    <script>
+        // Función para generar una ecuación de segundo grado con coeficientes aleatorios
+        function generateRandomQuadraticEquation() {
+            let a, b, c;
+            let solutions = [];
+            let equationString = "";
+
+            // Generar coeficientes hasta encontrar raíces reales
+            while (solutions.length !== 2 || !Number.isFinite(solutions[0]) || !Number.isFinite(solutions[1])) {
+                a = Math.floor(Math.random() * 5) + 1; // a entre 1 y 5
+                b = Math.floor(Math.random() * 21) - 10; // b entre -10 y 10
+                c = Math.floor(Math.random() * 21) - 10; // c entre -10 y 10
+
+                let discriminant = (b * b) - 4 * a * c;
+
+                if (discriminant >= 0) {
+                    let x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                    let x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                    solutions = [x1, x2];
+
+                    // Asegurarse de que las soluciones sean enteras o con un número limitado de decimales para problemas simples
+                    if (Number.isInteger(x1) && Number.isInteger(x2)) {
+                        break; // Salir si las soluciones son enteras
+                    } else if (Math.abs(x1 - Math.round(x1)) < 0.001 && Math.abs(x2 - Math.round(x2)) < 0.001) {
+                        // Aceptar soluciones que estén muy cerca de un entero
+                        solutions = [Math.round(x1), Math.round(x2)];
+                        break;
+                    } else {
+                        solutions = []; // Restablecer para intentar de nuevo
+                    }
+                } else {
+                    solutions = []; // Restablecer para intentar de nuevo
+                }
+            }
+
+            // Construir la cadena de la ecuación
+            equationString += a === 1 ? "x^2" : `${a}x^2`;
+            if (b !== 0) {
+                equationString += b > 0 ? ` + ${b}x` : ` - ${Math.abs(b)}x`;
+            }
+            if (c !== 0) {
+                equationString += c > 0 ? ` + ${c}` : ` - ${Math.abs(c)}`;
+            }
+            equationString += " = 0";
+
+            return {
+                equation: `$$${equationString}$$`,
+                solutions: solutions
+            };
+        }
+
+        // Número de problemas a generar
+        const numberOfProblems = 10; // Puedes cambiar esto a la cantidad que desees
+
+        // Obtener el contenedor de ecuaciones
+        const equationContainer = document.getElementById('equation-container');
+
+        // Generar y añadir problemas al contenedor
+        for (let i = 1; i <= numberOfProblems; i++) {
+            const problem = generateRandomQuadraticEquation();
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <div class="equation">${problem.equation}</div>
+                <div class="nombre-input">
+                    <label for="nombre-${i}">Nombre Completo:</label>
+                    <input type="text" id="nombre-${i}" name="nombre-${i}">
+                </div>
+            `;
+            equationContainer.appendChild(card);
+        }
+
+        // Volver a renderizar MathJax después de añadir el contenido dinámico
+        MathJax.typesetPromise();
+    </script>
 </body>
 
 </html>
