@@ -4,38 +4,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presentación de Google Pantalla Completa (Manual)</title>
+    <title>Secuencia Didáctica - Matemática - Tercero</title>
+
+    <script>
+        const presentationsData = [
+            {
+                "title": "Unidad 1 - La Ecuación De Segundo Grado",
+                "url": "https://docs.google.com/presentation/d/19WEuw4FSdq96Bbq6oWcps50gprsaE_L1IPLmN-vra2s/edit?usp=sharing"
+            },
+            {
+                "title": "Unidad 2 - Sistemas de dos ecuaciones lineales",
+                "url": "https://docs.google.com/presentation/d/1I0AMrmg-1BE6xRge7fWgwAIFhiLEeFJyspM9dXYy_N4/edit?usp=sharing"
+            }
+        ];
+    </script>
+
+
     <style>
-        /* CSS para que ocupe toda la pantalla */
-        html,
         body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
             margin: 0;
-            padding: 0;
-            height: 100%;
-            /* Asegura que el HTML y el Body usen toda la altura de la ventana */
-            width: 100%;
-            /* Asegura que el HTML y el Body usen todo el ancho de la ventana */
-            overflow: hidden;
-            /* Oculta barras de desplazamiento innecesarias */
+            padding: 20px;
         }
 
-        iframe {
-            /* Esto fuerza al iframe a usar el 100% del espacio disponible */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            color: #444;
+            margin: 0;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 10px;
+            width: 95%;
+            max-width: 1000px;
+            padding: 20px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal iframe {
+            width: 100%;
+            height: 600px;
             border: none;
-            /* Elimina el borde predeterminado del iframe */
+            border-radius: 8px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
 
 <body>
+    <h1>Secuencia Didactica - Matemática</h1>
+    <h2>Tercero Secundaria</h2>
+    <div class="grid" id="presentations"></div>
 
-    <iframe
-        src="https://docs.google.com/presentation/d/e/2PACX-1vSQyo90i5QyvLbyCxd-RncBe2q4AY2315uTJCyAE3abiByuAHy5jxhXNAVTTfWJVSJL1npSJcvxNAre/pubembed?start=false&loop=false&delayms=3000"
-        frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
-    </iframe>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close" id="close">&times;</span>
+            <iframe id="iframe" src="" frameborder="0" allowfullscreen="true" mozallowfullscreen="true"
+                webkitallowfullscreen="true"></iframe>
+        </div>
+    </div>
 
+    <script>
+        // Función corregida para una URL de incrustación estática y completa.
+        function transformUrl(editUrl) {
+
+            // 1. Extraer el ID de la presentación.
+            const match = editUrl.match(/\/d\/([^/]+)/);
+            if (!match) {
+                return editUrl;
+            }
+
+            const id = match[1];
+
+            // 2. Construir la URL de visualización estática.
+            // '/embed' es el formato para incrustar.
+            // 'start=false' evita el inicio automático de la presentación.
+            // Los controles de navegación y el botón de pantalla completa se incluyen por defecto con este formato.
+            return `https://docs.google.com/presentation/d/${id}/embed?start=false`;
+        }
+
+        function loadPresentations() {
+            const container = document.getElementById('presentations');
+            presentationsData.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<h2>${p.title}</h2>`;
+                card.addEventListener('click', () => openModal(transformUrl(p.url)));
+                container.appendChild(card);
+            });
+        }
+
+        function openModal(url) {
+            document.getElementById('iframe').src = url;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        document.getElementById('close').addEventListener('click', () => {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('iframe').src = '';
+        });
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.getElementById('iframe').src = '';
+            }
+        }
+
+        loadPresentations();
+    </script>
 </body>
 
 </html>
