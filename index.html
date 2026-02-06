@@ -1,210 +1,110 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
+    <title>Nos mudamos a Moodle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secuencia Didáctica - Matemática - Tercero</title>
-
-    <script>
-        const presentationsData = [
-            {
-                "title": "Unidad 1 - La Ecuación De Segundo Grado",
-                "url": "https://docs.google.com/presentation/d/19WEuw4FSdq96Bbq6oWcps50gprsaE_L1IPLmN-vra2s/edit?usp=sharing"
-            },
-            {
-                "title": "Unidad 2 - Sistemas de dos ecuaciones lineales",
-                "url": "https://docs.google.com/presentation/d/1I0AMrmg-1BE6xRge7fWgwAIFhiLEeFJyspM9dXYy_N4/edit?usp=sharing"
-            },
-            {
-                "title":"Evidencias de las actividades realizadas en clases",
-                "url":"https://docs.google.com/presentation/d/1q6qfEAoo0urhosyYvEiCGYmEj1StkJH9Gi1Kd4HPKNI/edit?usp=sharing"
-            }
-        ];
-    </script>
-
-
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
             margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #e4ecf3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             color: #333;
-            margin-bottom: 30px;
         }
 
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .border-wrap {
+            background: linear-gradient(135deg, #0056d2, #00b4d8);
+            padding: 2px;
+            border-radius: 20px;
         }
 
         .card {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 15px;
+            background: #ffffff;
+            padding: 3rem 2.5rem;
+            border-radius: 18px;
             text-align: center;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+        h1 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #2c3e50;
         }
 
-        .card h2 {
-            font-size: 18px;
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 1.2rem 0 2rem;
+            color: #555;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 0.9rem 1.8rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #0056d2, #0077ff);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        a.button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 86, 210, 0.3);
+        }
+
+        .signature {
+            margin-top: 2.5rem;
+            font-size: 0.95rem;
             color: #444;
-            margin: 0;
         }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
+        .signature span {
+            display: block;
+            margin-top: 0.3rem;
+            font-weight: 600;
+            color: #2c3e50;
         }
 
-        .modal-content {
-            background: #fff;
-            border-radius: 10px;
-            width: 95%;
-            max-width: 1000px;
-            padding: 20px;
-            position: relative;
-            animation: slideUp 0.3s ease;
-        }
-
-        .modal iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 8px;
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .footer {
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            color: #888;
         }
     </style>
 </head>
-
 <body>
-    <h1>Secuencia Didactica - Matemática</h1>
-    <h2>Tercero Secundaria</h2>
-    <div class="grid" id="presentations"></div>
 
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <span class="close" id="close">&times;</span>
-            <iframe id="iframe" src="" frameborder="0" allowfullscreen="true" mozallowfullscreen="true"
-                webkitallowfullscreen="true"></iframe>
+<div class="border-wrap">
+    <div class="card">
+        <h1>Nos mudamos a Moodle</h1>
+        <p>
+            Todo nuestro contenido ahora se encuentra en nuestra nueva
+            plataforma educativa. Haz clic abajo para continuar.
+        </p>
+
+        <a class="button" href="https://moodle.nube.do" target="_blank">
+            Ir a Moodle
+        </a>
+
+        <div class="signature">
+            Atentamente,
+            <span>Ing. Luis Antonio Nolasco Gómez</span>
+        </div>
+
+        <div class="footer">
+            Gracias por acompañarnos 💙
         </div>
     </div>
+</div>
 
-    <script>
-        // Función corregida para una URL de incrustación estática y completa.
-        function transformUrl(editUrl) {
-
-            // 1. Extraer el ID de la presentación.
-            const match = editUrl.match(/\/d\/([^/]+)/);
-            if (!match) {
-                return editUrl;
-            }
-
-            const id = match[1];
-
-            // 2. Construir la URL de visualización estática.
-            // '/embed' es el formato para incrustar.
-            // 'start=false' evita el inicio automático de la presentación.
-            // Los controles de navegación y el botón de pantalla completa se incluyen por defecto con este formato.
-            return `https://docs.google.com/presentation/d/${id}/embed?start=false`;
-        }
-
-        function loadPresentations() {
-            const container = document.getElementById('presentations');
-            presentationsData.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `<h2>${p.title}</h2>`;
-                card.addEventListener('click', () => openModal(transformUrl(p.url)));
-                container.appendChild(card);
-            });
-        }
-
-        function openModal(url) {
-            document.getElementById('iframe').src = url;
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        document.getElementById('close').addEventListener('click', () => {
-            document.getElementById('modal').style.display = 'none';
-            document.getElementById('iframe').src = '';
-        });
-
-        window.onclick = function (event) {
-            const modal = document.getElementById('modal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                document.getElementById('iframe').src = '';
-            }
-        }
-
-        loadPresentations();
-    </script>
 </body>
-
 </html>
