@@ -1,110 +1,647 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Nos mudamos a Moodle</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>Guía de Estudio Interactiva - Álgebra y Polinomios</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <!-- MathJax configuración mínima -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]']],
+                packages: { '[+]': [] }
+            },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
     <style>
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa, #e4ecf3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
+        :root {
+            --azul: #2f80ed;
+            --fondo: #f6f9fc;
+            --card: #ffffff;
+            --acento: #ffd166;
+            --gris: #6b7280;
+            --verde: #2ecc71;
+            --rojo: #ef476f;
+            --sombra: 0 8px 20px rgba(31, 41, 55, 0.08);
+            --radio: 12px;
         }
 
-        .border-wrap {
-            background: linear-gradient(135deg, #0056d2, #00b4d8);
-            padding: 2px;
-            border-radius: 20px;
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(180deg, var(--fondo), #eef6ff 60%);
+            color: #0f172a;
+            padding: 28px;
+        }
+
+        header {
+            max-width: 1000px;
+            margin: 0 auto 18px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--azul);
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: var(--gris)
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 18px auto 60px;
+            display: grid;
+            gap: 18px
         }
 
         .card {
-            background: #ffffff;
-            padding: 3rem 2.5rem;
-            border-radius: 18px;
-            text-align: center;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            background: var(--card);
+            border-radius: var(--radio);
+            padding: 18px;
+            box-shadow: var(--sombra);
+            border: 1px solid rgba(15, 23, 42, 0.04)
         }
 
-        h1 {
-            margin-top: 0;
-            font-size: 1.8rem;
-            color: #2c3e50;
+        .card h2 {
+            margin: 0 0 10px;
+            color: var(--azul);
+            font-size: 20px
         }
 
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin: 1.2rem 0 2rem;
-            color: #555;
+        .conceptos {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px
         }
 
-        a.button {
-            display: inline-block;
-            padding: 0.9rem 1.8rem;
+        .chip {
+            background: #eef7ff;
+            color: var(--azul);
+            padding: 8px 12px;
             border-radius: 999px;
-            background: linear-gradient(135deg, #0056d2, #0077ff);
-            color: #fff;
+            font-weight: 600;
+            font-size: 13px
+        }
+
+        .consejos {
+            background: linear-gradient(90deg, #fffaf0, #fff7e6);
+            border-left: 4px solid var(--acento);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            color: #4b3b00
+        }
+
+        .consejos ul {
+            margin: 8px 0 0;
+            padding-left: 18px;
+            color: #2b2b2b
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: var(--azul);
+            color: white;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-weight: 700;
+            box-shadow: 0 6px 14px rgba(47, 128, 237, 0.18)
         }
 
-        a.button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 86, 210, 0.3);
+        .ejemplo {
+            background: #f3f9ff;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            color: #0b3a66;
+            font-weight: 600
         }
 
-        .signature {
-            margin-top: 2.5rem;
-            font-size: 0.95rem;
-            color: #444;
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e6eefc, transparent);
+            margin: 18px 0;
+            border-radius: 2px
         }
 
-        .signature span {
-            display: block;
-            margin-top: 0.3rem;
-            font-weight: 600;
-            color: #2c3e50;
+        /* Modal */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1200;
+            padding: 20px
         }
 
-        .footer {
-            margin-top: 1.2rem;
-            font-size: 0.85rem;
-            color: #888;
+        .modal {
+            width: 100%;
+            max-width: 820px;
+            background: var(--card);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 20px 50px rgba(2, 6, 23, 0.45);
+            transform: translateY(8px);
+            animation: pop .18s ease-out;
+            position: relative
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(.99)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1)
+            }
+        }
+
+        .modal header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px
+        }
+
+        .modal h3 {
+            margin: 0;
+            color: var(--azul)
+        }
+
+        .close {
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: inline-grid;
+            place-items: center;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--gris)
+        }
+
+        .modal .contenido {
+            margin-top: 12px
+        }
+
+        .modal ol {
+            padding-left: 18px;
+            margin: 8px 0 0
+        }
+
+        .soluciones {
+            margin-top: 12px;
+            background: #f8fff4;
+            border-left: 4px solid var(--verde);
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            color: #0b3a1a;
+            font-weight: 600
+        }
+
+        .mostrar-sol {
+            margin-top: 12px;
+            display: inline-block;
+            padding: 8px 12px;
+            background: var(--azul);
+            color: #fff;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700
+        }
+
+        footer {
+            max-width: 1000px;
+            margin: 20px auto 60px;
+            text-align: center;
+            color: var(--gris)
+        }
+
+        @media (max-width:640px) {
+            body {
+                padding: 16px
+            }
+
+            .card {
+                padding: 14px
+            }
+
+            .modal {
+                padding: 14px
+            }
         }
     </style>
 </head>
+
 <body>
+    <header>
+        <h1>Guía de Estudio Interactiva — Álgebra y Polinomios</h1>
+        <p>Consejos, ejercicios tipo examen y soluciones ocultas</p>
+    </header>
 
-<div class="border-wrap">
-    <div class="card">
-        <h1>Nos mudamos a Moodle</h1>
-        <p>
-            Todo nuestro contenido ahora se encuentra en nuestra nueva
-            plataforma educativa. Haz clic abajo para continuar.
-        </p>
+    <main>
+        <!-- 1 Problema de razón constante -->
+        <section class="card" id="tanque">
+            <h2>1. Problema de tasa constante (tanque)</h2>
+            <div class="conceptos">
+                <div class="chip">Razón</div>
+                <div class="chip">Proporcionalidad</div>
+                <div class="chip">Sustracción</div>
+            </div>
+            <div class="consejos">
+                <strong>Pasos para resolver</strong>
+                <ul>
+                    <li>Identifica la cantidad inicial (capacidad o nivel actual) y la tasa de cambio por unidad de
+                        tiempo</li>
+                    <li>Multiplica la tasa por el tiempo transcurrido y réstalo de la cantidad inicial</li>
+                    <li>Comprueba que el resultado no sea negativo y que respete límites físicos (0 a capacidad máxima)
+                    </li>
+                </ul>
+            </div>
+            <div class="ejemplo">Ejemplo tipo examen: "Capacidad 400 L; se vacía a 0.8 L/min. ¿Cuántos litros quedan
+                después de 10 min?"</div>
+            <button class="btn" onclick="openModal('m1')">Practicar problema de tanque</button>
+        </section>
 
-        <a class="button" href="https://moodle.nube.do" target="_blank">
-            Ir a Moodle
-        </a>
+        <!-- 2 Ecuaciones de primer grado -->
+        <section class="card" id="primero">
+            <h2>2. Ecuaciones de primer grado (varias letras)</h2>
+            <div class="conceptos">
+                <div class="chip">Despeje</div>
+                <div class="chip">Operaciones inversas</div>
+                <div class="chip">Comprobación</div>
+            </div>
+            <div class="consejos">
+                <strong>Consejos</strong>
+                <ul>
+                    <li>Realiza operaciones iguales en ambos lados para agrupar términos semejantes</li>
+                    <li>La variable puede ser cualquier letra; trata igual que con \(x\)</li>
+                    <li>Comprueba sustituyendo la solución en la ecuación original</li>
+                </ul>
+            </div>
+            <div class="ejemplo">Ejemplo tipo examen: \(7f - 12 + f = -12 + 4f + 20\)</div>
+            <button class="btn" onclick="openModal('m2')">Practicar ecuaciones 1º grado</button>
+        </section>
 
-        <div class="signature">
-            Atentamente,
-            <span>Ing. Luis Antonio Nolasco Gómez</span>
+        <!-- 3 Ecuaciones de segundo grado -->
+        <section class="card" id="segundo">
+            <h2>3. Ecuaciones de segundo grado (tres formas)</h2>
+            <div class="conceptos">
+                <div class="chip">\(ax^2 + c = 0\)</div>
+                <div class="chip">\(ax^2 + bx = 0\)</div>
+                <div class="chip">\(ax^2 + bx + c = 0\)</div>
+            </div>
+            <div class="consejos">
+                <strong>Cómo abordarlas</strong>
+                <ul>
+                    <li>\(ax^2 + c = 0\): despejar \(x^2\) y usar raíz cuadrada; recuerda valores absolutos si
+                        corresponde</li>
+                    <li>\(ax^2 + bx = 0\): factoriza \(x(ax + b)=0\) y aplica la propiedad del producto nulo</li>
+                    <li>\(ax^2 + bx + c = 0\): aplica la fórmula general; en el examen la fórmula estará disponible</li>
+                </ul>
+            </div>
+            <div class="ejemplo">Ejemplos tipo examen: \(2x^2 - 8 = 0\); \(x^2 - 5x = 0\); \(x^2 - 3x + 2 = 0\)</div>
+            <button class="btn" onclick="openModal('m3')">Practicar ecuaciones 2º grado</button>
+        </section>
+
+        <!-- 4 Sistemas -->
+        <section class="card" id="sistemas">
+            <h2>4. Sistemas de ecuaciones lineales (2 incógnitas)</h2>
+            <div class="conceptos">
+                <div class="chip">Reducción</div>
+                <div class="chip">Sustitución</div>
+                <div class="chip">Igualación</div>
+            </div>
+            <div class="consejos">
+                <strong>Consejos para resolver</strong>
+                <ul>
+                    <li>Elige el método más directo según las ecuaciones (coeficientes simples → reducción)</li>
+                    <li>Comprueba la solución sustituyendo en ambas ecuaciones</li>
+                    <li>Si el sistema no tiene solución o tiene infinitas, explica por qué (paralelas o coincidentes)
+                    </li>
+                </ul>
+            </div>
+            <div class="ejemplo">Ejemplo tipo examen: resolver \(2x + 3y = 7\) y \(x - y = 1\)</div>
+            <button class="btn" onclick="openModal('m4')">Practicar sistemas</button>
+        </section>
+
+        <!-- 5 y 6 Inecuaciones y problema aplicado -->
+        <section class="card" id="inecuaciones">
+            <h2>5 y 6. Inecuaciones y problemas aplicados</h2>
+            <div class="conceptos">
+                <div class="chip">Inecuaciones lineales</div>
+                <div class="chip">Regiones en el plano</div>
+                <div class="chip">Modelado</div>
+            </div>
+            <div class="consejos">
+                <strong>Cómo resolver y graficar</strong>
+                <ul>
+                    <li>Para \(ax+by < c\) dibuja la recta \(ax+by=c\) y sombrea el lado que cumple la desigualdad</li>
+                    <li>Si la desigualdad es estricta usa línea punteada; si incluye igualdad usa línea continua</li>
+                    <li>En problemas reales traduce condiciones a inecuaciones y verifica ejemplos numéricos</li>
+                </ul>
+            </div>
+            <div class="ejemplo">Ejemplo aplicado: límite de captura 800 kg; camarón ≤ 2 × dorado</div>
+            <button class="btn" onclick="openModal('m5')">Practicar inecuaciones y problema</button>
+        </section>
+
+        <!-- 7,8,9 Polinomios y operaciones -->
+        <section class="card" id="polinomios">
+            <h2>7–9. Polinomios: conceptos, operaciones y división</h2>
+            <div class="conceptos">
+                <div class="chip">Grado</div>
+                <div class="chip">Término independiente</div>
+                <div class="chip">Monomio/Binomio/Trinomio</div>
+                <div class="chip">Suma/Producto/División</div>
+                <div class="chip">Ruffini</div>
+            </div>
+            <div class="consejos">
+                <strong>Puntos clave</strong>
+                <ul>
+                    <li>Grado: mayor exponente de la variable; término independiente: sin variable</li>
+                    <li>Para sumar/restar ordena por grado y combina coeficientes semejantes</li>
+                    <li>Multiplica coeficientes y suma exponentes; para dividir usa Ruffini cuando divides por binomio
+                        de la forma \(x - r\)</li>
+                </ul>
+            </div>
+            <div class="ejemplo">Ejercicios tipo examen: A=(2x+3), B=(x^2) → calcular A+B, A−B, A·B, A÷B; división por
+                Ruffini</div>
+            <button class="btn" onclick="openModal('m6')">Practicar polinomios y Ruffini</button>
+        </section>
+
+        <!-- 10 Diagramas de Venn -->
+        <section class="card" id="venn">
+            <h2>10. Diagramas de Venn / Euler</h2>
+            <div class="conceptos">
+                <div class="chip">Conjuntos</div>
+                <div class="chip">Intersección</div>
+                <div class="chip">Unión</div>
+            </div>
+            <div class="consejos">
+                <strong>Cómo dibujar y resolver</strong>
+                <ul>
+                    <li>Identifica conjuntos y relaciones (intersección, diferencia, unión)</li>
+                    <li>Coloca números en las regiones correctas y verifica totales</li>
+                    <li>Para Euler omite regiones vacías si no existen elementos</li>
+                </ul>
+            </div>
+            <div class="ejemplo">Ejercicio tipo examen: dibuja Venn con dos conjuntos y datos de pertenencia</div>
+            <button class="btn" onclick="openModal('m7')">Practicar Venn</button>
+        </section>
+    </main>
+
+    <!-- Overlay y modales -->
+    <div id="overlay" class="overlay" onclick="closeAll(event)">
+        <!-- Modal 1 -->
+        <div id="m1" class="modal" style="display:none" onclick="event.stopPropagation()">
+            <header>
+                <h3>Problema de tanque — práctica</h3>
+                <div class="close" onclick="closeModal('m1')">✕</div>
+            </header>
+            <div class="contenido">
+                <p>Resuelve y comprueba</p>
+                <ol>
+                    <li>Capacidad 400 L; se vacía a 0.8 L/min. ¿Cuántos litros quedan después de 10 min?</li>
+                    <li>Si en lugar de vaciarse se llenara a 0.8 L/min, ¿cuánto tiempo tardaría en llenarse desde 0
+                        hasta 400 L?</li>
+                    <li>Si el tanque tenía 250 L y se vacía a 1.2 L/min, ¿cuánto queda tras 60 min?</li>
+                </ol>
+                <button class="mostrar-sol" onclick="toggleSol('s1')">Mostrar soluciones</button>
+                <div id="s1" class="soluciones">
+                    <ol>
+                        <li>\(400 - 0.8\times10 = 400 - 8 = 392\) litros.</li>
+                        <li>Tiempo = \(400 \div 0.8 = 500\) minutos.</li>
+                        <li>\(250 - 1.2\times60 = 250 - 72 = 178\) litros.</li>
+                    </ol>
+                </div>
+            </div>
         </div>
 
-        <div class="footer">
-            Gracias por acompañarnos 💙
+        <!-- Modal 2 -->
+        <div id="m2" class="modal" style="display:none" onclick="event.stopPropagation()">
+            <header>
+                <h3>Ecuaciones de primer grado — práctica</h3>
+                <div class="close" onclick="closeModal('m2')">✕</div>
+            </header>
+            <div class="contenido">
+                <p>Resuelve cada una; la variable puede ser cualquier letra</p>
+                <ol>
+                    <li>\(7f - 12 + f = -12 + 4f + 20\)</li>
+                    <li>\(3a + 5 = 2a - 7\)</li>
+                    <li>\(5y - 2( y - 3) = 4\)</li>
+                    <li>\(2m + 3 = 3( m - 1) + 6\)</li>
+                </ol>
+                <button class="mostrar-sol" onclick="toggleSol('s2')">Mostrar soluciones</button>
+                <div id="s2" class="soluciones">
+                    <ol>
+                        <li>Simplifica: \(8f -12 = 4f +8\) → \(4f = 20\) → \(f = 5\).</li>
+                        <li>\(3a+5=2a-7\) → \(a=-12\).</li>
+                        <li>\(5y -2y +6 =4\) → \(3y = -2\) → \(y = -\tfrac{2}{3}\).</li>
+                        <li>\(2m+3 = 3m -3 +6\) → \(2m+3 = 3m+3\) → \(-m=0\) → \(m=0\).</li>
+                    </ol>
+                </div>
+            </div>
         </div>
+
+        <!-- Modal 3 -->
+        <div id="m3" class="modal" style="display:none" onclick="event.stopPropagation()">
+            <header>
+                <h3>Ecuaciones de segundo grado — práctica</h3>
+                <div class="close" onclick="closeModal('m3')">✕</div>
+            </header>
+            <div class="contenido">
+                <p>Aplica el método indicado para cada forma</p>
+                <ol>
+                    <li>\(2x^2 - 8 = 0\) (forma \(ax^2 + c = 0\))</li>
+                    <li>\(x^2 - 5x = 0\) (forma \(ax^2 + bx = 0\))</li>
+                    <li>\(x^2 - 3x + 2 = 0\) (forma general)</li>
+                </ol>
+                <button class="mostrar-sol" onclick="toggleSol('s3')">Mostrar soluciones</button>
+                <div id="s3" class="soluciones">
+                    <ol>
+                        <li>\(2x^2 = 8\) → \(x^2 = 4\) → \(x = \pm 2\). (usar valor absoluto si se presenta como \(x =
+                            \sqrt{4}\))</li>
+                        <li>Factoriza: \(x(x - 5) = 0\) → \(x = 0\) o \(x = 5\).</li>
+                        <li>Fórmula general: raíces \(x = \dfrac{3 \pm \sqrt{9 - 8}}{2} = \dfrac{3 \pm 1}{2}\) → \(x=2\)
+                            o \(x=1\).</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 4 -->
+        <div id="m4" class="modal" style="display:none" onclick="event.stopPropagation()">
+            <header>
+                <h3>Sistemas de ecuaciones — práctica</h3>
+                <div class="close" onclick="closeModal('m4')">✕</div>
+            </header>
+            <div class="contenido">
+                <p>Resuelve por el método que prefieras</p>
+                <ol>
+                    <li>\(\begin{cases}2x + 3y = 7\\ x - y = 1\end{cases}\)</li>
+                    <li>\(\begin{cases}3a - 2b = 4\\ 6a - 4b = 8\end{cases}\) (observa la relación entre ecuaciones)
+                    </li>
+                    <li>\(\begin{cases}x + 2y = 5\\ 2x - y = 1\end{cases}\)</li>
+                </ol>
+                <button class="mostrar-sol" onclick="toggleSol('s4')">Mostrar soluciones</button>
+                <div id="s4" class="soluciones">
+                    <ol>
+                        <li>De \(x - y =1\) → \(x = y+1\). Sustituye: \(2(y+1)+3y=7\) → \(5y+2=7\) → \(y=1\), \(x=2\).
+                        </li>
+                        <li>Segunda ecuación es múltiplo de la primera → infinitas soluciones si coinciden; aquí ambas
+                            son equivalentes → infinitas soluciones (coincidentes).</li>
+                        <li>Multiplica segunda por 2 y resta: \(x+2y=5\) y \(4x-2y=2\) → suma: \(5x=7\) → \(x=7/5\);
+                            luego \(y=(5-x)/2\).</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 5 -->
+        <div id="m5" class="modal" style="display:none" onclick="event.stopPropagation()">
+            <header>
+                <h3>Inecuaciones y problema aplicado — práctica</h3>
+                <div class="close" onclick="closeModal('m5')">✕</div>
+            </header>
+            <div class="contenido">
+                <p>Grafica y modela; da ejemplos válidos y no válidos</p>
+                <ol>
+                    <li>Grafica la inecuación \(2x + y \le 6\)</li>
+                    <li>Grafica la inecuación \(x - 3y > 2\)</li>
+                    <li>Problema: cooperativa — dorado = \(d\), camarón = \(c\). Condiciones: \(d + c \le 800\) y \(c
+                        \le 2d\). Da 3 combinaciones válidas y 3 no válidas y explica.</li>
+                </ol>
+                <button class="mostrar-sol" onclick="toggleSol('s5')">Mostrar soluciones / pistas</button>
+                <div id="s5" class="soluciones">
+                    <ol>
+                        <li>Recta \(2x+y=6\). Sombrea la región por debajo (incluye la recta). Usa línea continua.</li>
+                        <li>Recta \(x-3y=2\). Sombrea el lado donde \(x-3y>2\). Usa línea punteada.</li>
+                        <li>Ejemplos válidos: (d=200,c=400) cumple \(200+400=600\le800\) y \(400\le400\). (d=300,c=600)
+                            cumple. (d=400,c=0) cumple. No válidos: (d=100,c=500) porque \(500>2\cdot100\).
+                            (d=500,c=400) porque \(500+400>800\). (d=0,c=700) porque \(700>2\cdot0\).</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 6 -->
+        <div id="m6" class="modal" style="display:none" onclick="event.stopPropagation()">
+            <header>
+                <h3>Polinomios — práctica (operaciones y Ruffini)</h3>
+                <div class="close" onclick="closeModal('m6')">✕</div>
+            </header>
+            <div class="contenido">
+                <p>Realiza operaciones y división</p>
+                <ol>
+                    <li>Dados \(A(x)=2x+3\) y \(B(x)=x^2\): calcula \(A+B\), \(A-B\), \(A\cdot B\), \(A\div B\) (si
+                        aplica)</li>
+                    <li>Divide \(x^3 - 6x^2 + 11x -6\) por \(x - 1\) usando Ruffini</li>
+                    <li>Clasifica: ¿qué es un monomio, binomio, trinomio? Da ejemplos</li>
+                </ol>
+                <button class="mostrar-sol" onclick="toggleSol('s6')">Mostrar soluciones</button>
+                <div id="s6" class="soluciones">
+                    <ol>
+                        <li>\(A+B = x^2 + 2x + 3\). \(A-B = -x^2 + 2x + 3\). \(A\cdot B = 2x^3 + 3x^2\). División
+                            \(A\div B\) no es polinomio entero (grado menor).</li>
+                        <li>Ruffini con raíz \(1\): coeficientes 1, -6, 11, -6 → cociente \(x^2 -5x +6\) y resto 0.</li>
+                        <li>Monomio: una sola parte (ej. \(5x^3\)). Binomio: dos términos (ej. \(x+2\)). Trinomio: tres
+                            términos (ej. \(x^2 -3x +2\)).</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 7 -->
+        <div id="m7" class="modal" style="display:none" onclick="event.stopPropagation()">
+            <header>
+                <h3>Diagramas de Venn — práctica</h3>
+                <div class="close" onclick="closeModal('m7')">✕</div>
+            </header>
+            <div class="contenido">
+                <p>Dibuja y completa</p>
+                <ol>
+                    <li>Conjunto A tiene 12 elementos, B tiene 9, y la intersección A∩B tiene 4. Dibuja el diagrama y
+                        coloca los números en cada región.</li>
+                    <li>Si universo tiene 25 elementos, ¿cuántos están fuera de A∪B?</li>
+                    <li>Dibuja un diagrama de Euler si A∩B = ∅ y A tiene 7 elementos, B tiene 5.</li>
+                </ol>
+                <button class="mostrar-sol" onclick="toggleSol('s7')">Mostrar soluciones / pistas</button>
+                <div id="s7" class="soluciones">
+                    <ol>
+                        <li>Región A sólo: \(12-4=8\). Región B sólo: \(9-4=5\). Intersección: 4.</li>
+                        <li>\(|A\cup B| = 8+5+4 = 17\). Fuera: \(25-17=8\).</li>
+                        <li>Euler: dibuja dos círculos separados (sin intersección) y coloca 7 y 5 respectivamente;
+                            resto del universo según datos.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
 
+    <footer>
+        <p><strong>Consejo final</strong> Practica cada modal, intenta resolver antes de mostrar soluciones.</p>
+    </footer>
+
+    <script>
+        function openModal(id) {
+            document.getElementById('overlay').style.display = 'flex';
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            const modal = document.getElementById(id);
+            if (modal) modal.style.display = 'block';
+            modal && modal.querySelectorAll('.soluciones').forEach(s => s.style.display = 'none');
+        }
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.style.display = 'none';
+            const anyVisible = Array.from(document.querySelectorAll('.modal')).some(m => m.style.display === 'block');
+            if (!anyVisible) document.getElementById('overlay').style.display = 'none';
+        }
+        function closeAll(e) {
+            if (e.target.id === 'overlay') {
+                document.getElementById('overlay').style.display = 'none';
+                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            }
+        }
+        function toggleSol(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+            if (el.style.display === 'block') el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                document.getElementById('overlay').style.display = 'none';
+                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            }
+        });
+    </script>
 </body>
+
 </html>
